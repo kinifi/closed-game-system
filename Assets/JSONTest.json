@@ -1,0 +1,42 @@
+[
+	{
+		"m_position": {
+			"x": 0,
+			"y": 0
+		},
+		"m_name": "name0",
+		"m_static": false
+	},
+	{
+		"m_position": {
+			"x": 1,
+			"y": 1
+		},
+		"m_name": "name1",
+		"m_static": false
+	},
+	{
+		"m_position": {
+			"x": 2,
+			"y": 2
+		},
+		"m_name": "name2",
+		"m_static": false
+	},
+	{
+		"m_position": {
+			"x": 3,
+			"y": 3
+		},
+		"m_name": "name3",
+		"m_static": false
+	},
+	{
+		"m_position": {
+			"x": 4,
+			"y": 4
+		},
+		"m_name": "name4",
+		"m_static": false
+	}
+]
