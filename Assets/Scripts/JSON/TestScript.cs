@@ -26,6 +26,7 @@ public class TestScript : MonoBehaviour {
             //set the position
             newEntity.m_position.x = i;
             newEntity.m_position.y = i;
+            newEntity.m_position.z = i;
             //this object will not be static
             newEntity.m_static = false;
             //add the new Entity to the list of Entities 
@@ -48,11 +49,4 @@ public class TestScript : MonoBehaviour {
 
     }
 
-}
-
-public class Entity
-{
-    public Vector2 m_position;
-    public string m_name;
-    public bool m_static;
 }
