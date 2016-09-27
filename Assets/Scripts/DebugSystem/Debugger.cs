@@ -13,6 +13,8 @@ public class Debugger : MonoBehaviour {
 
 	private float deltaTime = 0.0f;
 
+	public KeyCode m_activateKeyCode;
+	
 	public GUISkin m_skin;
 
 	// Use this for initialization
@@ -26,7 +28,7 @@ public class Debugger : MonoBehaviour {
 	void Update () 
 	{
 		//check if the user has pressed tab or not to bring up the debugger
-		if(Input.GetKeyDown(KeyCode.Tab))
+		if(Input.GetKeyDown(m_activateKeyCode))
 		{
 			ToggleDebugger();
 		}
@@ -39,7 +41,7 @@ public class Debugger : MonoBehaviour {
 	private void ToggleDebugger()
 	{
 		m_debuggerOn = !m_debuggerOn;
-    	Debug.Log("Toggling Debugger");
+    	// Debug.Log("Toggling Debugger");
 	}
 
 	private string FPSDisplay()
@@ -168,7 +170,7 @@ public class Debugger : MonoBehaviour {
 			if (obj.transform.childCount != 0)
 			{
 				// Traverse(obj);
-				if(GUILayout.Button(obj.name + " - " + obj.activeSelf + " - P"))
+				if(GUILayout.Button(obj.name + " - P"))
 				{
 					if(obj.activeSelf == true)
 					{
@@ -182,7 +184,7 @@ public class Debugger : MonoBehaviour {
 			}
 			else if(obj.transform.parent != null)
 			{
-				if(GUILayout.Button(">" + obj.name + " - " + obj.activeSelf + " - C"))
+				if(GUILayout.Button(">" + obj.name + " - C"))
 				{
 					if(obj.activeSelf == true)
 					{
@@ -196,7 +198,7 @@ public class Debugger : MonoBehaviour {
 			}
 			else if(obj.transform.parent == null)
 			{
-				if(GUILayout.Button(obj.name + " - " + obj.activeSelf))
+				if(GUILayout.Button(obj.name))
 				{
 					if(obj.activeSelf == true)
 					{
