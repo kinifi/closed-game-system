@@ -9,7 +9,11 @@ public class Debugger : MonoBehaviour {
 	public List<Log> m_logs = new List<Log>();
 
 	private string m_viewingStackTrace = "Select A Log/Error/Warning to view the StackTrace";
-	private Vector2 scrollPosition;
+	private Vector2 scrollPosition, treeScrollPosition;
+
+	private float deltaTime = 0.0f;
+
+	public GUISkin m_skin;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +30,10 @@ public class Debugger : MonoBehaviour {
 		{
 			ToggleDebugger();
 		}
+
+		//FPS delta time 
+		deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+
 	}
 
 	private void ToggleDebugger()
@@ -34,17 +42,46 @@ public class Debugger : MonoBehaviour {
     	Debug.Log("Toggling Debugger");
 	}
 
+	private string FPSDisplay()
+	{
+		float msec = deltaTime * 1000.0f;
+		float fps = 1.0f / deltaTime;
+		string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
+		return text;
+	}
+
     void OnGUI()
     {
 
+    	GUI.skin = m_skin;
+
+    	//check to see if the debugger is enabled or not
     	if(m_debuggerOn == false)
     		return;
 
-		GUILayout.Box("", GUILayout.Width(Screen.width), GUILayout.Height(Screen.height));
 
-    	GUILayout.BeginArea(new Rect(0,0, Screen.width, Screen.height));
+    	GUILayout.BeginArea(new Rect(Screen.width-Screen.width/4,0, Screen.width/4, Screen.height));
 
-    	GUILayout.Button(Application.productName + " | Tab = Open/Close Debugger | Copy & Pasting Stacktraces Allowed");
+    	//title 
+    	GUILayout.Label("Tree View of Scene - GameObjects");
+
+    	treeScrollPosition = GUILayout.BeginScrollView(treeScrollPosition);
+
+    	TreeCreation();
+
+    	GUILayout.EndScrollView();
+
+		GUILayout.EndArea();
+
+
+
+    	//makes a background for the debugger. Passing a blank string is so it doesn't display text
+		GUILayout.Box("", GUILayout.Width(Screen.width/4*3), GUILayout.Height(Screen.height));
+
+		//create a container for the debugger
+    	GUILayout.BeginArea(new Rect(0,0, Screen.width/4*3, Screen.height));
+
+    	GUILayout.Button(Application.productName + " | Tab = Open/Close Debugger | " + " FPS: " + FPSDisplay());
 
     	if(m_logs.Count != 0)
     	{
@@ -119,5 +156,82 @@ public class Debugger : MonoBehaviour {
         m_logs.Add(newLog);
 
     }
+
+
+    private void TreeCreation()
+    {
+    	//find all the GameObjects in the scene
+		foreach (GameObject obj in Object.FindObjectsOfType(typeof(GameObject)))
+		{
+
+			//TODO: check if child count exists
+			if (obj.transform.childCount != 0)
+			{
+				// Traverse(obj);
+				if(GUILayout.Button(obj.name + " - " + obj.activeSelf + " - P"))
+				{
+					if(obj.activeSelf == true)
+					{
+						obj.SetActive(false);
+					}
+					else
+					{
+						obj.SetActive(true);
+					}
+				}
+			}
+			else if(obj.transform.parent != null)
+			{
+				if(GUILayout.Button(">" + obj.name + " - " + obj.activeSelf + " - C"))
+				{
+					if(obj.activeSelf == true)
+					{
+						obj.SetActive(false);
+					}
+					else
+					{
+						obj.SetActive(true);
+					}
+				}
+			}
+			else if(obj.transform.parent == null)
+			{
+				if(GUILayout.Button(obj.name + " - " + obj.activeSelf))
+				{
+					if(obj.activeSelf == true)
+					{
+						obj.SetActive(false);
+					}
+					else
+					{
+						obj.SetActive(true);
+					}
+				}
+			}
+		}
+    }
+
+	private void Traverse(GameObject obj)
+	{
+
+		foreach (Transform child in obj.transform) 
+		{
+
+			if(GUILayout.Button(">>>>>>" + obj.name + " - " + obj.activeSelf))
+			{
+				if(obj.activeSelf == true)
+				{
+					obj.SetActive(false);
+				}
+				else
+				{
+					obj.SetActive(true);
+				}
+			}
+
+			Traverse (child.gameObject);
+		}
+
+	}
 
 }
