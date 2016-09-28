@@ -1,0 +1,38 @@
+[
+	{
+		"m_position": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"m_name": "levelselectionmenu",
+		"m_static": false
+	},
+	{
+		"m_position": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"m_name": "foldercreation",
+		"m_static": false
+	},
+	{
+		"m_position": {
+			"x": 0,
+			"y": 3,
+			"z": 0
+		},
+		"m_name": "directional light",
+		"m_static": false
+	},
+	{
+		"m_position": {
+			"x": 0,
+			"y": 1,
+			"z": -10
+		},
+		"m_name": "main camera",
+		"m_static": false
+	}
+]
